@@ -71,7 +71,7 @@ Enrique Tejera Gonzalez\\
 Pawel Ulita\\
        \affaddr{Vrije Universiteit Amsterdam}\\
        \affaddr{Amsterdam, Netherlands}\\
-       \email{ADD EMAIL}
+       \email{p.k.ulita@student.vu.nl}
 }
 % There's nothing stopping you putting the seventh, eighth, etc.
 % author on the opening page (as the 'third row') but we ask,
@@ -169,7 +169,7 @@ After that we use a position decoder from The OpenSky Network’s library and fe
 
 Real life data is not perfect and even after sorting the messages by time rather often there are 
 situations where there are multiple odd or even messages in a row. Fortunately, 
-the position decoder handles incorrect situations like this one very well. \cite{salas:calculus} 
+the position decoder handles incorrect situations like this one very well.
 
 \section{Visualisation}
 
@@ -195,10 +195,12 @@ for our project, the possibility of accessing it anytime only accessing the map.
 The only problem was that all the routes information could not be inserted after the creation of the 
 final map, leaving no option for interaction with the user after exporting the map.
 
-We decided that we preferred to make it interactive, simple and intuitive, because the aim was to 
-represent flight routes we do not need so much information about the countries and airports. 
-The best option that we found was to create a webpage with the world map. 
-Airports will be provided by the origins and destinations of routes extracted from the dataset.
+\begin{figure}
+\centering
+\includegraphics[width=0.47\textwidth]{Europe_mini}
+\caption{Map visualisation in QGIS with layer of airports applied.}
+\label{fig:Europe_mini}
+\end{figure}
 
 \subsection{Route representation}
 One of the biggest problems we have when we are done with extracting 
@@ -219,10 +221,7 @@ very efficient. However, using this method will not take into account
 the shape of the line and straight parts will be overrepresented.
 
 Another approach is known as the Ramer–Douglas–Peucker algorithm. 
-It was developed by Urs Ramer in 1972
- \footnote{An iterative procedure for the polygonal approximation of plane curves} 
-and David Douglas and Thomas Peucker in 1973
- \footnote{Algorithms for the Reduction of the Number of Points Required to Represent a Digitized Line or its Caricature}.
+It was developed by U. Ramer \cite{Ramer:polygonal}, David Douglas and Thomas Peucker \cite{Douglas:reduction}.
 
 This algorithm focuses on removing points which have the least meaning 
 in terms of the general shape. Before the algorithm starts, an arbitrary
@@ -240,6 +239,34 @@ If no such point c exists, then the algorithm terminates.
 
 The expected complexity of this algorithm is: \begin{displaymath}{O(n \log n)}\end{displaymath}
 However, in the worst case scenario it goes up to: \begin{displaymath}{O(n^2)}\end{displaymath}
+
+\section{Second Visualisation}
+After achieving the first static visualisation we decided to make 
+another one interactive, simple and intuitive, because of the aim was to 
+represent flight routes we do not need so much information 
+about countries and airports for printing routes. 
+The best option that we found was to create a webpage, using Javascript and Json. 
+
+This time the world map was obtained from 
+Amcharts \footnote{https://www.amcharts.com/javascript-maps/}. 
+They provide not only the map but diferent options for representing 
+points in the map (airports in our case) and animating 
+little planes through the lines created between points. 
+
+For our project airports will be provided by the origins and 
+destinations of routes extracted from the dataset, because 
+for this case we cannot use all airports of the World. 
+Routes will be provided in the same way but instead of using shapefiles we will convert them to json files.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.47\textwidth]{js_Europe_center_few_airports}
+\caption{Map visualisation using js with a few airports added.}
+\label{fig:js_Europe_center_few_airportsi}
+\end{figure}
+
+For this visualisation, we made 
+
 
 \section{Conclusions}
 CONCLUSIONS HERE
