@@ -110,6 +110,45 @@ and the code created for filtering the information that we wanted to extract fro
 
 Another dataset of 600 GB was provided, this time information was from september of 2016.
 
+\section{Related work}
+In 2010 Matei Zaharia, Mosharaf Chowdhury, Michael J. Franklin, 
+Scott Shenker, Ion Stoica from University of California, 
+Berkeley proposed a new model for cluster computing called Spark. 
+This system was supposed to replace the standard in 2010 which 
+was MapReduce. The authors claim that a system with a wider range 
+of possible programming styles than MapReduce allows is necessary. 
+The two main types are: iterative jobs and interactive analytics.
+
+The entry point of Spark applications is so called driver program. 
+This application controls all of the operations on the data which then 
+are issued to the cluster. The data itself is represented as RDDs, 
+resilient distributed datasets. It’s a lazy and read-only representation 
+of a dataset. Thanks to it the user doesn’t have to worry about parallelization and resilience.
+
+A RDD can be created from several sources, most notably: 
+a file from a shared file system (e.g. HDFS), by parallelizing a 
+Scala collection, by transforming an existing RDD, by changing 
+the persistence of an existing RDD. There is a collection of parallel 
+operations supported by Spark. It includes reduce, collect (which 
+sends the RDD back to the driver program) and foreach which allows 
+invoking a function to get side effects.
+
+The operations mentioned in the previous paragraph clearly belong to 
+the functional paradigm. However, Spark allows also more imperative way 
+of writing applications. This is done by using shared variables: broadcast 
+variables and accumulators. The former can be used to distribute a big 
+read-only piece of data to the workers. This is an optimization which prevents 
+sending this structure every time an operation relying on it is performed. 
+The latter can be used as a counter of any type.
+
+Implementing RDDs was the central part of the implementation. 
+RDDs are implemented as a list of objects capturing the actions which 
+are supposed to be invoked on the dataset. Each RDD implements an 
+interface which consists of 3 methods: getPartitions(), getIterator(partition) 
+and getPreferredLocations(partition). getPartitions() returns list of partition 
+IDs which contain the data. getIterator() returns an iterator used to iterating 
+over a partition. getPreferredLocation() is used to achieve data locality.
+
 \section{Technologies}
 The main technology used in this assignment is Apache Spark 1.6.1 with Scala 2.10. 
 Besides that we used Python 2.7. Spark was used to first filter and then analyze the dataset. 
@@ -255,13 +294,14 @@ little planes through the lines created between points.
 
 For our project airports will be provided by the origins and 
 destinations of routes extracted from the dataset, because 
-for this case we cannot use all airports of the World. 
+for this case we cannot use airports of the World as points in the map, it could lead to confussion
+because routes are made of coordinates and not all start or finish at the same position of an airport. 
 Routes will be provided in the same way but instead of using shapefiles we will convert them to json files.
 
 \begin{figure}
 \centering
 \includegraphics[width=0.47\textwidth]{js_Europe_center_few_airports}
-\caption{Map visualisation using js with a few airports added.}
+\caption{Second visualisation using js with a few airports added.}
 \label{fig:js_Europe_center_few_airportsi}
 \end{figure}
 
@@ -269,15 +309,29 @@ For this visualisation, we made
 
 
 \section{Conclusions}
-CONCLUSIONS HERE
+The most important part of this project was to identify 
+and visualize flights which could be considered as unscheduled. 
+We did that mainly by looking for planes which didn’t emit any 
+callsign or their callsign didn’t belong to a known airline. 
+Then those messages were grouped by ICAO24 and by date. 
+Routes obtained this way were reduced using the Ramer–Douglas–Peucker algorithm. 
+The planes were also annotated with information 
+about the manufacturer and model. 
+This approach gives us a reasonably good picture of the main routes and most popular airports. 
+This is clearly visible on visualizations.
+
+However, there are a lot of questions which we weren’t 
+able to answer due to lack of time. We weren't able to extract 
+unusual airports and find a reasonable heuristic for identifying 
+rendition flights. We also didn’t analyze the altitudes, so we 
+weren’t able to easily extract single flights within a day. 
+Another problem was that we weren’t able to use the new 
+dataset, because we were getting strange results. 
+Due to lack of time we didn’t address those problems.
 %\end{document}  % This is where a 'short' article might terminate
 
 % ensure same length columns on last page (might need two sub-sequent latex runs)
-\balance
-
-%ACKNOWLEDGMENTS are optional
-\section{Acknowledgments}
-AAA
+%\balance
 
 
 % The following two commands are all you need in the
