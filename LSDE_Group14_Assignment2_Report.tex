@@ -267,6 +267,13 @@ in terms of the general shape. Before the algorithm starts, an arbitrary
  parameter - let’s call it d - has to be known. This parameter describes the 
 accuracy of the output line. The higher it is, the less accurate the output is.
 
+\begin{figure}
+\centering
+\includegraphics[width=0.47\textwidth]{europe_airports_routes_sample}
+\caption{Representation of routes using first visualisation.}
+\label{fig:europe_airports_routes_samplei}
+\end{figure}
+
 A simplified version of this algorithm is as follows. 
 The first and the last point of the line are included in the output line. 
 Let’s call them a and b, respectively. Then it is checked whether there are 
@@ -286,6 +293,13 @@ represent flight routes we do not need so much information
 about countries and airports for printing routes. 
 The best option that we found was to create a webpage, using Javascript and Json. 
 
+\begin{figure}
+\centering
+\includegraphics[width=0.47\textwidth]{js_Europe_center_few_airports}
+\caption{Second visualisation using js with a few airports added.}
+\label{fig:js_Europe_center_few_airportsi}
+\end{figure}
+
 This time the world map was obtained from 
 Amcharts \footnote{https://www.amcharts.com/javascript-maps/}. 
 They provide not only the map but diferent options for representing 
@@ -297,15 +311,6 @@ destinations of routes extracted from the dataset, because
 for this case we cannot use airports of the World as points in the map, it could lead to confussion
 because routes are made of coordinates and not all start or finish at the same position of an airport. 
 Routes will be provided in the same way but instead of using shapefiles we will convert them to json files.
-
-\begin{figure}
-\centering
-\includegraphics[width=0.47\textwidth]{js_Europe_center_few_airports}
-\caption{Second visualisation using js with a few airports added.}
-\label{fig:js_Europe_center_few_airportsi}
-\end{figure}
-
-For this visualisation, we made 
 
 
 \section{Conclusions}
